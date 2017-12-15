@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>google search api</title>
+        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+        <script src="static/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='row'><h1>Google Search Api</h1></div>
+            <div>
+                <small>Search: {{ data['queries']['request']['title'] }} <i>Results: {{ data['queries']['request']['totalResults'] }}</i></small>
+            </div>
+                {% for segment in data['items'] %}
+                    <div class='row' style='margin:3px;'>
+                        <div class='col-md-12'>
+                            <div class="card" style='padding: 20px;'>
+                                <div class="card-block">
+                                    <h4 class="card-title">{{ segment['htmlTitle']|safe }}</h4>
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        <a href='{{ segment['link'] }}'>
+                                            {{ segment['displayLink']|safe  }}
+                                        </a>
+                                    </h6>
+                                    <p class="card-text">{{ segment['htmlSnippet']|safe }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+        </div>
+        <script>
+            console.log('here');
+        </script>
+    </body>
+</html>
