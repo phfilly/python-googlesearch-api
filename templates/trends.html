@@ -8,9 +8,16 @@
     </head>
     <body>
         <div class='container'>
-            <div class='row'><h1>Google Trends: {{ term }} <small>[ Interest Over Time ]</small></h1></div>
-            <p></p>
-            <canvas id="influence-over-time" width="600" height="400"></canvas>
+            <div class='row'><h1>Google Trends: {{ term }}</h1></div>
+            <div class='row'>
+              <div class='col-md-6'>
+                  <canvas id="influence-over-time" width="600" height="400"></canvas>
+              </div>
+              <div class='col-md-6'>
+                  <canvas id="region" width="600" height="400"></canvas>
+              </div>
+            </div>
+            
         </div>
         <script>
             new Chart(document.getElementById("influence-over-time"), {
@@ -29,6 +36,28 @@
                   }
                 ]
               }
+            });
+
+            var barData = {
+              labels : [{% for province in provinces %}
+                              "{{province}}",
+                          {% endfor %}],
+              datasets : [
+                  {
+                    title: 'Term by region',
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    data : [{% for value in province_value %}
+                                  {{value}},
+                                {% endfor %}]
+                  }
+                  ]
+              }
+
+            var myBarChart = new Chart(document.getElementById("region"), {
+              type: 'bar',
+              data: barData,
             });
         </script>
     </body>
