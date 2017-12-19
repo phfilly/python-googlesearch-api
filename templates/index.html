@@ -1,16 +1,18 @@
 <html>
     <head>
-        <title>google search api</title>
-        <link rel="stylesheet" href="static/css/bootstrap.min.css">
-        <script src="static/js/bootstrap.min.js"></script>
+        <title>Home</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     </head>
     <body>
         <div class='container'>
             <div class='row'><h1>Google Search Api</h1></div>
-            <div>
-                <small>Search: {{ data['queries']['request']['title'] }} <i>Results: {{ data['queries']['request']['totalResults'] }}</i></small>
+            <div class='row'>
+                <small>Search: {{ data['queries']['request'][0]['searchTerms'] }} | Total Results: {{ data['queries']['request'][0]['totalResults'] }}</small>
             </div>
+            <br>
                 {% for segment in data['items'] %}
                     <div class='row' style='margin:3px;'>
                         <div class='col-md-12'>
@@ -18,7 +20,7 @@
                                 <div class="card-block">
                                     <h4 class="card-title">{{ segment['htmlTitle']|safe }}</h4>
                                     <h6 class="card-subtitle mb-2 text-muted">
-                                        <a href='{{ segment['link'] }}'>
+                                        <a href='{{ segment['link'] }}' target='_blank'>
                                             {{ segment['displayLink']|safe  }}
                                         </a>
                                     </h6>

@@ -1,4 +1,3 @@
-import pprint
 import environment
 import database
 import trends
@@ -9,40 +8,40 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-@app.route('/')
-def main():
+@app.route('/<term>')
+def main(term):
     service = build(
         "customsearch",
         "v1",
         developerKey=environment.key)
 
     res = service.cse().list(
-      q='mercedes',
+      q=term,
       cx=environment.cxId,
     ).execute()
     return render_template('index.html', data=res)
 
 
-@app.route('/trends')
-def trending():
-    iotData = trends.interestOverTime("Russian Bear Vodka")
+@app.route('/trends/<term>')
+def trending(term):
+    iotData = trends.retrieveData(term)
     values = []
     data = {}
     dates = []
     provinces = []
     province_value = []
 
-    data = iotData.groupby(iotData.index.date).sum()
+    data = iotData[0].groupby(iotData[0].index.date).sum()
     for index, row in data.iterrows():
         dates.append(index.strftime("%Y-%m-%d"))
         values.append(row[0])
 
-    regionData = trends.interestByRegion("Russian Bear Vodka")
+    regionData = iotData[1]
     for index, row in regionData.iterrows():
         provinces.append(index)
         province_value.append(row[0])
 
-    return render_template('trends.html', values=values, dates=dates, data=data, term="Russian Bear Vodka", provinces=provinces, province_value=province_value)
+    return render_template('trends.html', values=values, dates=dates, data=data, term=term, provinces=provinces, province_value=province_value)
 
 
 @app.route('/read')

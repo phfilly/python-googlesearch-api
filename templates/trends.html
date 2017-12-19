@@ -1,14 +1,19 @@
 <html>
     <head>
-        <title>google search api</title>
-        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+        <title>Trends</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="static/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     </head>
     <body>
         <div class='container'>
-            <div class='row'><h1>Google Trends: {{ term }}</h1></div>
+            <div class='row'>
+              <div class='col-lg-12'>
+                  <h1 class="text-center">Google Trends: {{ term }}</h1>
+              </div>
+            </div>
+            <br>
             <div class='row'>
               <div class='col-md-6'>
                   <canvas id="influence-over-time" width="600" height="400"></canvas>
@@ -43,17 +48,16 @@
                               "{{province}}",
                           {% endfor %}],
               datasets : [
-                  {
-                    title: 'Term by region',
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    data : [{% for value in province_value %}
-                                  {{value}},
-                                {% endfor %}]
-                  }
-                  ]
-              }
+                {
+                  label: 'Interest by region',
+                  borderColor: "rgb(62,149,205)",
+                  backgroundColor: "rgb(62,149,205)",
+                  data : [{% for value in province_value %}
+                                {{value}},
+                              {% endfor %}]
+                }
+              ]
+            }
 
             var myBarChart = new Chart(document.getElementById("region"), {
               type: 'bar',
