@@ -8,6 +8,11 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
+@app.route('/')
+def home():
+    return render_template('index.html', data='please select a term in the address bar')
+
+
 @app.route('/<term>')
 def main(term):
     service = build(
@@ -48,12 +53,20 @@ def trending(term):
 def read():
     conn = database.connect()
     cur = conn.cursor()
-    before = datetime.datetime.now()
-    cur.execute("SELECT * FROM public.community where brand = 'REMY_MARTIN'")
-    rows = cur.fetchall()
-    after = datetime.datetime.now()
-    return render_template('read.html', data=rows, length=len(rows), before=before, after=after)
+    community = query(cur, 'Community', environment.community)
+    topEngagers = query(cur, 'Top Engagers', environment.topEngagers)
+    # topInfluencers = query(cur, 'Engagers', "select * from ")
 
+    return render_template('read.html', data=[community, topEngagers])
+
+
+def query(cur, name, query):
+    start = datetime.datetime.now()
+    cur.execute(query)
+    rows = cur.fetchall()
+    end = datetime.datetime.now()
+
+    return [end-start, rows, name, len(rows)]
 
 if __name__ == '__main__':
     main()

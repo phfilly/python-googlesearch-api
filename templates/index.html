@@ -1,35 +1,27 @@
-<html>
-    <head>
-        <title>Home</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    </head>
-    <body>
-        <div class='container'>
-            <div class='row'><h1>Google Search Api</h1></div>
-            <div class='row'>
-                <small>Search: {{ data['queries']['request'][0]['searchTerms'] }} | Total Results: {{ data['queries']['request'][0]['totalResults'] }}</small>
-            </div>
-            <br>
-                {% for segment in data['items'] %}
-                    <div class='row' style='margin:3px;'>
-                        <div class='col-md-12'>
-                            <div class="card" style='padding: 20px;'>
-                                <div class="card-block">
-                                    <h4 class="card-title">{{ segment['htmlTitle']|safe }}</h4>
-                                    <h6 class="card-subtitle mb-2 text-muted">
-                                        <a href='{{ segment['link'] }}' target='_blank'>
-                                            {{ segment['displayLink']|safe  }}
-                                        </a>
-                                    </h6>
-                                    <p class="card-text">{{ segment['htmlSnippet']|safe }}</p>
-                                </div>
+{% extends "top.html" %}
+{% block content %}
+    <div class='container'>
+        <div class='row'><h1>Google Search Api</h1></div>
+        <div class='row'>
+            <small>Search: {{ data['queries']['request'][0]['searchTerms'] }} | Total Results: {{ data['queries']['request'][0]['totalResults'] }}</small>
+        </div>
+        <br>
+            {% for segment in data['items'] %}
+                <div class='row' style='margin:3px;'>
+                    <div class='col-md-12'>
+                        <div class="card" style='padding: 20px;'>
+                            <div class="card-block">
+                                <h4 class="card-title">{{ segment['htmlTitle']|safe }}</h4>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <a href='{{ segment['link'] }}' target='_blank'>
+                                        {{ segment['displayLink']|safe  }}
+                                    </a>
+                                </h6>
+                                <p class="card-text">{{ segment['htmlSnippet']|safe }}</p>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-        </div>
-    </body>
-</html>
+                </div>
+            {% endfor %}
+    </div>
+{% endblock %}

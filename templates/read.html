@@ -1,0 +1,28 @@
+{% extends "top.html" %}
+{% block content %}
+<div class='container'>
+    <div class='row'><h1>Read From DB</h1></div>
+    <div class='row'>
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Query</th>
+                        <th>Total Records</th>
+                        <th>Time Excecuted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in data %}
+                      <tr>
+                        <td> {{ loop.index }} </td>
+                        <td> {{ record[2] }}  </td>
+                        <td> {{ record[3] }}  </td>
+                        <td> {{ record[0] }}  </td>
+                      </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
