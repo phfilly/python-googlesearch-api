@@ -7,3 +7,7 @@ I do not have a lot of experience in Python so do feel free to contribute/critic
 1. Run in the command line with `flask run`
 2. Try using the /trends/YOUR TERM HERE to retrieve your trending data _only_ currently supporting (interest over time and interest by region)
 3. Loading the homepage you will see the top google searches for your specified term. For example: `http://localhost/Star Wars`
+
+# What you can expect
+
+![Nodes](https://github.com/phfilly/python-googlesearch-api/blob/master/Screen%20Shot%202017-12-19%20at%2011.25.45%20AM.png)
